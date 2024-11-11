@@ -1,5 +1,6 @@
 import random
-
+import sys
+from db import read_file
 
 def calculate_points(hand):
     total_points = 0
@@ -109,6 +110,7 @@ def main():
     print("Blackjack payout is 3:2")
     print()
     while True:
+        money = read_file()
         print()
         dealer_hand, dealer_points = dealer_cards(deck)
         print()

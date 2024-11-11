@@ -22,3 +22,7 @@ def update_money(money, bet, result):
 
     print(f"Money: {money:.2f}")
     return money
+
+def save_money(money):
+    with open("money.txt", "w") as file:
+        file.write(f"{money:.2f}")

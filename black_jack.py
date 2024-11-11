@@ -1,6 +1,6 @@
 import random
 import sys
-from db import read_file
+from db import read_file, update_money, save_money
 
 
 def bet_amount(money):
@@ -18,6 +18,19 @@ def bet_amount(money):
                     return bet
         except ValueError:
             print("Invalid number. Please try again.")
+
+def buy_chips(money):
+    while True:
+        try:
+            amount = float(input(f"How much would you like to buy? (current Money: {money:.2f}): "))
+            if amount <= 0:
+                print("You must buy a positive amount of chips.")
+            else:
+                money += amount
+                save_money(money)
+                return money
+        except ValueError:
+            print("Invalid amount. Please try again.")
 
 
 def calculate_points(hand):
@@ -68,7 +81,7 @@ def dealer_cards(deck):
 
     return dealer_hand, dealer_points
 
-def your_cards(deck, dealer_hand, dealer_points):
+def user_cards(deck, dealer_hand, dealer_points):
     user_hand = []
     print("YOUR CARDS:")
     for _ in range(2):
@@ -147,14 +160,27 @@ def main():
     print()
     while True:
         money = read_file()
-        bet = bet_amount(money)
-        print()
-        dealer_hand, dealer_points = dealer_cards(deck)
-        print()
-        user_hand, user_points = your_cards(deck, dealer_hand, dealer_points)
-        print()
-        money = determine_winner(user_points, dealer_points, money, bet)
-        print()
+
+        while True:
+            if money < 5:
+                print("Your Money is below the minimum bet amount (5).")
+                choice = input("Would you like to buy more chips? (yes/no): ").strip().lower()
+                if choice == "yes":
+                    money = buy_chips(money)
+                    print(f"Money: {money:.2f}")
+                else:
+                    print("You do not have enough money to continue. Exiting game.")
+                    break
+                    
+            bet = bet_amount(money)
+            print()
+            dealer_hand, dealer_points = dealer_cards(deck)
+            print()
+            user_hand, user_points = user_cards(deck, dealer_hand, dealer_points)
+            print()
+            money = determine_winner(user_points, dealer_points, money, bet)
+            print()
+            break
         again = input("Play again? (y/n): ").lower()
         print()
         if again != 'y':

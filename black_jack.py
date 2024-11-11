@@ -114,6 +114,24 @@ def your_cards(deck, dealer_hand, dealer_points):
 
     return user_hand, user_points
 
+def determine_winner(user_points, dealer_points, money, bet):
+    if user_points > 21:
+        print("Sorry. You lose.")
+        money = update_money(money, bet, "lose")
+    elif dealer_points > 21:
+        print("Congradulations! You win.")
+        money = update_money(money, bet, "win")
+    elif user_points > dealer_points:
+        print("Congradulations! You win.")
+        money = update_money(money, bet, "win")
+    elif user_points < dealer_points:
+        print("Sorry. You lose.")
+        money = update_money(money, bet, "lose")
+    else:
+        print("It's a tie!")
+    return money
+
+
 def main():
 
     suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
@@ -135,7 +153,8 @@ def main():
         print()
         user_hand, user_points = your_cards(deck, dealer_hand, dealer_points)
         print()
-
+        money = determine_winner(user_points, dealer_points, money, bet)
+        print()
         again = input("Play again? (y/n): ").lower()
         print()
         if again != 'y':

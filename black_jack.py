@@ -2,6 +2,24 @@ import random
 import sys
 from db import read_file
 
+
+def bet_amount(money):
+    while True:
+        try:
+            while True:
+                bet = float(input("Bet amount: "))
+                if bet < 5:
+                    print("The minimum bet can't be smaller than 5. Please try again.")
+                elif bet > 1000:
+                    print("The maximum bet can't be greater than 1,000. please try again")
+                elif bet > money:
+                    print(f"You connot bet more than the money you have({money:.2f}). Please try again.")
+                else:
+                    return bet
+        except ValueError:
+            print("Invalid number. Please try again.")
+
+
 def calculate_points(hand):
     total_points = 0
     aces = 0
@@ -111,6 +129,7 @@ def main():
     print()
     while True:
         money = read_file()
+        bet = bet_amount(money)
         print()
         dealer_hand, dealer_points = dealer_cards(deck)
         print()

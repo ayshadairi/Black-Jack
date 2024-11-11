@@ -2,7 +2,7 @@ import random
 import sys
 from db import read_file, update_money, save_money
 
-
+# getting the bet abount from the user
 def bet_amount(money):
     while True:
         try:
@@ -18,7 +18,8 @@ def bet_amount(money):
                     return bet
         except ValueError:
             print("Invalid number. Please try again.")
-
+            
+# Function for bying more chips if the money amount goes below 5
 def buy_chips(money):
     while True:
         try:
@@ -32,7 +33,7 @@ def buy_chips(money):
         except ValueError:
             print("Invalid amount. Please try again.")
 
-
+# Function that calculates the points
 def calculate_points(hand):
     total_points = 0
     aces = 0
@@ -54,7 +55,7 @@ def calculate_points(hand):
     return total_points
 
 
-
+# All the cards that the dealer has, and adds the points the dealer has
 def dealer_cards(deck):
     dealer_hand = []
     card1 = random.choice(deck)
@@ -81,6 +82,7 @@ def dealer_cards(deck):
 
     return dealer_hand, dealer_points
 
+# get the user's cards and calculate the points
 def user_cards(deck, dealer_hand, dealer_points):
     user_hand = []
     print("YOUR CARDS:")
@@ -96,7 +98,7 @@ def user_cards(deck, dealer_hand, dealer_points):
         if choice == "11" and user_points + 10 <= 21:
             user_points +=10
     
-    
+    # ask the user if he/she would like to hit or stand
     while True:
             if user_points > 21:
                 print("Bust! You went over 21.")
@@ -127,6 +129,7 @@ def user_cards(deck, dealer_hand, dealer_points):
 
     return user_hand, user_points
 
+# this function will determine the winner of the game
 def determine_winner(user_points, dealer_points, money, bet):
     if user_points > 21:
         print("Sorry. You lose.")
@@ -144,7 +147,7 @@ def determine_winner(user_points, dealer_points, money, bet):
         print("It's a tie!")
     return money
 
-
+# the main function which includes all the calls needed for this program
 def main():
 
     suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
@@ -160,7 +163,7 @@ def main():
     print()
     while True:
         money = read_file()
-
+        # propmts the user to add chips if he/she is below 5
         while True:
             if money < 5:
                 print("Your Money is below the minimum bet amount (5).")

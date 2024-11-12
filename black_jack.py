@@ -2,6 +2,7 @@ import random
 import sys
 from db import read_file, update_money, save_money
 
+
 # getting the bet abount from the user
 def bet_amount(money):
     while True:

@@ -8,8 +8,12 @@ def read_file():
             print("Money:", money)
             return money
     except FileNotFoundError:
-        print("Could not find the file named money.txt")
-        exit_program()
+        print("Could not find the file named money.txt. Exiting the program")
+        sys.exit()
+    except Exception as e:
+        print(type(e),e)
+        print("Closing program")
+        sys.exit()
         
 def update_money(money, bet, result):
     if result == "win":

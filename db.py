@@ -1,5 +1,6 @@
 import sys
 
+# this function is for reading the file that contains the money
 def read_file():
     try:
         with open("money.txt", 'r') as file:
@@ -14,7 +15,8 @@ def read_file():
         print(type(e),e)
         print("Closing program")
         sys.exit()
-        
+
+# this will calculate the money if the user wins/loses and write the changes to the file
 def update_money(money, bet, result):
     if result == "win":
         money += bet * 1.5
@@ -27,6 +29,7 @@ def update_money(money, bet, result):
     print(f"Money: {money:.2f}")
     return money
 
+# this function is for saving any changes to the file
 def save_money(money):
     with open("money.txt", "w") as file:
         file.write(f"{money:.2f}")
